@@ -12,6 +12,9 @@ import net
 from deformations import elastically_deform_image_2d
 import progress
 
+import wandb
+wandb.init(project="tbcnn", entity="joeljosephjin")
+
 # Remove tf annoying logging
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
 
@@ -111,6 +114,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
             # Compute metrics
             accuracy = sess.run(accuracy_fn)
             auc = sess.run(auc_fn)
+            wandb.log({"accuracy":accuracy, "auc_fn":auc_fn})
 
             if True:
                 # Every logging_interval epochs compute and save results on the test set
@@ -130,6 +134,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                 # Compute test metrics
                 test_accuracy = sess.run(accuracy_fn)
                 test_auc = sess.run(auc_fn)
+                wandb.log({"test_accuracy":test_accuracy, "test_auc":test_auc})
 
                 # Collect summaries for tensorboard
                 summ_data = sess.run(metrics_summary, {
