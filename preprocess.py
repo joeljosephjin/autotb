@@ -42,6 +42,7 @@ def preprocess(inDir, outDir, size=512):
         ext = os.path.splitext(f)[1]
         if ext.lower() != '.png':
             print('Skipping file {}, as it isn\'t a PNG image.'.format(f))
+            continue
 
 
         if os.path.exists(out_path):
