@@ -35,8 +35,12 @@ def split_train_and_test(images, labels, ratio=0.8):
     training_images = images[:split]
     training_labels = labels[:split]
 
+    print('Diversity of Training Set:', 'Class 0:', training_labels.tolist().count(0), 'Class 1:', training_labels.tolist().count(1))
+
     test_images = images[split:]
     test_labels = labels[split:]
+
+    print('Diversity of Training Set:', 'Class 0:', test_labels.tolist().count(0), 'Class 1:', test_labels.tolist().count(1))
 
     return [training_images, training_labels], [test_images, test_labels]
 
@@ -81,7 +85,7 @@ def get_rotations(num, image_sets, label_sets):
     
     return training_sets, test_sets
 
-def train_single(inFile, size=512):
+def train_single(inFile, epochs, size=512):
     """Train network a single time using the given files as input.
 
     inFile => path without extension (more than one file will be read)
@@ -96,7 +100,7 @@ def train_single(inFile, size=512):
     # Create training and test sets
     training, test = split_train_and_test(images, labels)
 
-    train_loop.train_net(training, test, size=size)
+    train_loop.train_net(training, test, size=size, epochs=epochs)
 
 def train_cross_validation(inFile, sets=3, size=512):
     """Train network multiple times in a cross validation fashon, in order to

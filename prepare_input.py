@@ -19,6 +19,7 @@ def prepare(inDir, outFile):
     name_list = []
     label_list = []
     image_list = []
+    # for f in tqdm(files[:100]+files[-100:]):
     for f in tqdm(files):
         in_path = os.path.join(inDir, f)
         
@@ -26,15 +27,17 @@ def prepare(inDir, outFile):
         pieces = filename.split('_')
         name = pieces[1]
         label = int(pieces[2]) # 1 tbc, 0 nothing
+        try:
+            img = imageio.imread(in_path)
 
-        img = imageio.imread(in_path)
-
-        # Convert to float
-        img_float = img.astype(np.float32)
-        
-        label_list.append(label)
-        name_list.append(name)
-        image_list.append(img_float)
+            # Convert to float
+            img_float = img.astype(np.float32)
+            
+            label_list.append(label)
+            name_list.append(name)
+            image_list.append(img_float)
+        except Exception as e:
+            print('Error at Image:', f, e)
     
     # Now we have all images in an array
     # First convert it to a single ndarray instead of a list

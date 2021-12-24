@@ -36,7 +36,8 @@ def preprocess(inDir, outDir, size=512):
         print("Please put the images into the data folder. Download from https://ceb.nlm.nih.gov/repositories/tuberculosis-chest-x-ray-image-data-sets/")
         sys.exit(1)
 
-    for i, f in enumerate(tqdm(files)):
+    for i, f in enumerate(tqdm(files[:100]+files[-100:])):
+    # for i, f in enumerate(tqdm(files)):
         in_path = os.path.join(inDir, f)
         out_path = os.path.join(outDir, f)
 
