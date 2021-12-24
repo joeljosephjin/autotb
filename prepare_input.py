@@ -1,6 +1,7 @@
 import os
 import numpy as np
 import imageio
+from tqdm import tqdm
 
 def prepare(inDir, outFile):
     """Prepare input: convert to float with unit variance and zero mean,
@@ -18,7 +19,7 @@ def prepare(inDir, outFile):
     name_list = []
     label_list = []
     image_list = []
-    for f in files:
+    for f in tqdm(files):
         in_path = os.path.join(inDir, f)
         
         filename = os.path.splitext(f)[0]

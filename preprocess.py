@@ -3,6 +3,8 @@ import sys
 import numpy as np
 import imageio
 import skimage.transform
+from skimage import img_as_ubyte
+from tqdm import tqdm
 
 def remove_border(img, threshold=0):
     "Crop image, throwing away the border below the threshold"
@@ -34,7 +36,7 @@ def preprocess(inDir, outDir, size=512):
         print("Please put the images into the data folder. Download from https://ceb.nlm.nih.gov/repositories/tuberculosis-chest-x-ray-image-data-sets/")
         sys.exit(1)
 
-    for i, f in enumerate(files):
+    for i, f in enumerate(tqdm(files)):
         in_path = os.path.join(inDir, f)
         out_path = os.path.join(outDir, f)
 
@@ -49,7 +51,7 @@ def preprocess(inDir, outDir, size=512):
             # If the file was already preprocessed, do nothing
             continue
 
-        print('Preprocessing {} - {} %'.format(f, int(i / num * 100)), end='\r')
+        # print('Preprocessing {} - {} %'.format(f, int(i / num * 100)), end='\r')
 
         img = imageio.imread(in_path)
 
@@ -67,4 +69,4 @@ def preprocess(inDir, outDir, size=512):
         # Resize to final size
         img_resized = skimage.transform.resize(img_cropped, (size, size), order=3)
 
-        imageio.imsave(out_path, img_resized)
+        imageio.imsave(out_path, img_as_ubyte(img_resized))
