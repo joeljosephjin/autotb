@@ -53,8 +53,6 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
     border = (test_images.shape[1] - size) // 2
     test_images = test_images[:,border:border+size, border:border+size]
 
-    print()
-
     epoch_size = int(math.ceil(training_images.shape[0] / batch_size))
 
     # Use tensorflow Dataset API to improve the performances of the training set

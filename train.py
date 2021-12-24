@@ -32,6 +32,6 @@ progress.start_tensorboard()
 
 # Train network
 if '--cross-validation' in sys.argv:
-    train_variants.train_cross_validation(relPath('input'), sets=3, size=SIZE)
+    train_variants.train_cross_validation(relPath('input'), epochs=20, sets=3, size=SIZE)
 else:
-    train_variants.train_single(relPath('input'), epochs, size=SIZE)
+    train_variants.train_single(relPath('input'), epochs=20, size=SIZE)
