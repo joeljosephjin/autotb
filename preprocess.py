@@ -5,6 +5,8 @@ import imageio
 import skimage.transform
 from skimage import img_as_ubyte
 from tqdm import tqdm
+import random
+
 
 def remove_border(img, threshold=0):
     "Crop image, throwing away the border below the threshold"
@@ -36,7 +38,9 @@ def preprocess(inDir, outDir, size=512):
         print("Please put the images into the data folder. Download from https://ceb.nlm.nih.gov/repositories/tuberculosis-chest-x-ray-image-data-sets/")
         sys.exit(1)
 
-    for i, f in enumerate(tqdm(files[:100]+files[-100:])):
+    random.shuffle(files)
+
+    for i, f in enumerate(tqdm(files[:200])):
     # for i, f in enumerate(tqdm(files)):
         in_path = os.path.join(inDir, f)
         out_path = os.path.join(outDir, f)
