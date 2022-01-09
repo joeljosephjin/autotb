@@ -24,6 +24,7 @@ print('cross_validation:', args.cross_validation)
 
 # Constants
 SIZE = 512
+# SIZE = 128
 
 # Helper functions
 def relPath(dir):

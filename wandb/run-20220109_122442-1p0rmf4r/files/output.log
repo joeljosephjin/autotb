@@ -1,0 +1,62 @@
+cross_validation: True
+Preprocessing...
+Preparing input...
+Input was already prepared
+Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time
+Starting 3-fold cross validation study...
+Set 1
+Diversity of Training Set: Class 0: 114 Class 1: 19
+Diversity of Validation Set: Class 0: 54 Class 1: 13
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:63: shuffle_and_repeat (from tensorflow.python.data.experimental.ops.shuffle_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.shuffle(buffer_size, seed)` followed by `tf.data.Dataset.repeat(count)`. Static tf.data optimizations will take care of using the fused implementation.
+WARNING:tensorflow:From /usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py:465: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:69: DatasetV1.make_one_shot_iterator (from tensorflow.python.data.ops.dataset_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+This is a deprecated API that should only be used in TF 1 graph mode and legacy TF 2 graph mode available through `tf.compat.v1`. In all other situations -- namely, eager mode and inside `tf.function` -- you can consume dataset elements using `for elem in dataset: ...` or by explicitly creating iterator via `iterator = iter(dataset)` and fetching its elements via `values = next(iterator)`. Furthermore, this API is not available in TF 2. During the transition from TF 1 to TF 2 you can use `tf.compat.v1.data.make_one_shot_iterator(dataset)` to create a TF 1 graph mode style iterator for a dataset created through TF 2 APIs. Note that this should be a transient state of your code base as there are in general no guarantees about the interoperability of TF 1 and TF 2 code.
+WARNING:tensorflow:From /content/tbcnn/net.py:17: The name tf.keras.initializers.he_normal is deprecated. Please use tf.compat.v1.keras.initializers.he_normal instead.
+/content/tbcnn/net.py:21: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  output = tf.layers.batch_normalization(output)
+/usr/local/lib/python3.7/dist-packages/keras/legacy_tf_layers/normalization.py:455: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs, training=training)
+/content/tbcnn/net.py:35: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  parallel = tf.layers.batch_normalization(parallel)
+Traceback (most recent call last):
+  File "train.py", line 50, in <module>
+    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
+  File "/content/tbcnn/train_variants.py", line 141, in train_cross_validation
+    epochs=epochs,
+  File "/content/tbcnn/train_loop.py", line 72, in train_net
+    inp_var, labels_var, output = net.generate_network(size)
+  File "/content/tbcnn/net.py", line 62, in generate_network
+    output = generate_convolutional_block(output, filters=64*width)
+  File "/content/tbcnn/net.py", line 46, in generate_convolutional_block
+    )(output)
+  File "/usr/local/lib/python3.7/dist-packages/keras/legacy_tf_layers/base.py", line 569, in __call__
+    outputs = super(Layer, self).__call__(inputs, *args, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/keras/engine/base_layer_v1.py", line 765, in __call__
+    outputs = call_fn(cast_inputs, *args, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py", line 696, in wrapper
+    return converted_call(f, args, kwargs, options=options)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py", line 337, in converted_call
+    return _call_unconverted(f, args, kwargs, options, False)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py", line 464, in _call_unconverted
+    return f(*args, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/keras/layers/pooling.py", line 362, in call
+    data_format=conv_utils.convert_data_format(self.data_format, 4))
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/util/traceback_utils.py", line 153, in error_handler
+    raise e.with_traceback(filtered_tb) from None
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/framework/ops.py", line 1939, in _create_c_op
+    raise ValueError(e.message)
+ValueError: Negative dimension size caused by subtracting 3 from 1 for '{{node max_pooling2d_3/MaxPool}} = MaxPool[T=DT_FLOAT, data_format="NHWC", explicit_paddings=[], ksize=[1, 3, 3, 1], padding="VALID", strides=[1, 2, 2, 1]](truediv_3)' with input shapes: [?,1,1,64].

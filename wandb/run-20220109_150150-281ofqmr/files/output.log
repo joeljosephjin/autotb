@@ -1,0 +1,123 @@
+cross_validation: True
+Preprocessing...
+Preparing input...
+Input was already prepared
+Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time
+Starting 3-fold cross validation study...
+Set 1
+Diversity of Training Set: Class 0: 109 Class 1: 24
+Diversity of Validation Set: Class 0: 59 Class 1: 8
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:63: shuffle_and_repeat (from tensorflow.python.data.experimental.ops.shuffle_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.shuffle(buffer_size, seed)` followed by `tf.data.Dataset.repeat(count)`. Static tf.data optimizations will take care of using the fused implementation.
+WARNING:tensorflow:From /usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py:465: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:69: DatasetV1.make_one_shot_iterator (from tensorflow.python.data.ops.dataset_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+This is a deprecated API that should only be used in TF 1 graph mode and legacy TF 2 graph mode available through `tf.compat.v1`. In all other situations -- namely, eager mode and inside `tf.function` -- you can consume dataset elements using `for elem in dataset: ...` or by explicitly creating iterator via `iterator = iter(dataset)` and fetching its elements via `values = next(iterator)`. Furthermore, this API is not available in TF 2. During the transition from TF 1 to TF 2 you can use `tf.compat.v1.data.make_one_shot_iterator(dataset)` to create a TF 1 graph mode style iterator for a dataset created through TF 2 APIs. Note that this should be a transient state of your code base as there are in general no guarantees about the interoperability of TF 1 and TF 2 code.
+WARNING:tensorflow:From /content/tbcnn/net.py:17: The name tf.keras.initializers.he_normal is deprecated. Please use tf.compat.v1.keras.initializers.he_normal instead.
+/content/tbcnn/net.py:21: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  output = tf.layers.batch_normalization(output)
+/usr/local/lib/python3.7/dist-packages/keras/legacy_tf_layers/normalization.py:455: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs, training=training)
+/content/tbcnn/net.py:35: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  parallel = tf.layers.batch_normalization(parallel)
+Parameter number: 231602
+name: accuracy
+name: AUC
+name: recall
+name: precision
+name: accuracy
+name: AUC
+name: recall
+name: precision
+WARNING:tensorflow:From /content/tbcnn/net.py:98: auc (from tensorflow.python.ops.metrics_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+The value of AUC returned by this may race with the update so this is deprecated. Please use tf.keras.metrics.AUC instead.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Test image 67 / 67
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1380, in _do_call
+    return fn(*args)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1364, in _run_fn
+    target_list, run_metadata)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1458, in _call_tf_sessionrun
+    run_metadata)
+tensorflow.python.framework.errors_impl.InvalidArgumentError: You must feed a value for placeholder tensor 'test_precision' with dtype float
+	 [[{{node test_precision}}]]
+During handling of the above exception, another exception occurred:
+Traceback (most recent call last):
+  File "train.py", line 50, in <module>
+    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
+  File "/content/tbcnn/train_variants.py", line 141, in train_cross_validation
+    epochs=epochs,
+  File "/content/tbcnn/train_loop.py", line 142, in train_net
+    'test_AUC:0': test_auc,
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 971, in run
+    run_metadata_ptr)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1194, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1374, in _do_run
+    run_metadata)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1399, in _do_call
+    raise type(e)(node_def, op, message)  # pylint: disable=no-value-for-parameter
+tensorflow.python.framework.errors_impl.InvalidArgumentError: You must feed a value for placeholder tensor 'test_precision' with dtype float
+	 [[node test_precision
+ (defined at /content/tbcnn/progress.py:28)
+]]
+Errors may have originated from an input operation.
+Operation defined at: (most recent call last)
+>>>   File "train.py", line 50, in <module>
+>>>     train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
+>>>
+>>>   File "/content/tbcnn/train_variants.py", line 141, in train_cross_validation
+>>>     epochs=epochs,
+>>>
+>>>   File "/content/tbcnn/train_loop.py", line 78, in train_net
+>>>     metrics_summary = progress.create_metrics_summary(metrics)
+>>>
+>>>   File "/content/tbcnn/progress.py", line 28, in create_metrics_summary
+>>>     placeholder = tf.placeholder(tf.float32, shape=None, name=dataset + '_' + name)
+>>>
+Original stack trace for 'test_precision':
+  File "train.py", line 50, in <module>
+    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
+  File "/content/tbcnn/train_variants.py", line 141, in train_cross_validation
+    epochs=epochs,
+  File "/content/tbcnn/train_loop.py", line 78, in train_net
+    metrics_summary = progress.create_metrics_summary(metrics)
+  File "/content/tbcnn/progress.py", line 28, in create_metrics_summary
+    placeholder = tf.placeholder(tf.float32, shape=None, name=dataset + '_' + name)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/ops/array_ops.py", line 3289, in placeholder
+    return gen_array_ops.placeholder(dtype=dtype, shape=shape, name=name)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/ops/gen_array_ops.py", line 6894, in placeholder
+    "Placeholder", dtype=dtype, shape=shape, name=name)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/framework/op_def_library.py", line 746, in _apply_op_helper
+    attrs=attr_protos, op_def=op_def)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/framework/ops.py", line 3705, in _create_op_internal
+    op_def=op_def)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/framework/ops.py", line 2101, in __init__
+    self._traceback = tf_stack.extract_stack_for_node(self._c_op)

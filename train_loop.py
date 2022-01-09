@@ -96,12 +96,13 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
             # Get needed functions
             accuracy_fn, accuracy_update = metrics['accuracy']
             auc_fn, auc_update = metrics['AUC']
+            precision_fn, precision_update = metrics['precision']
 
             for b in range(epoch_size):
                 batch_imgs, batch_labs = sess.run(next_training)
 
                 # Train
-                sess.run([train_fn, accuracy_update, auc_update], {
+                sess.run([train_fn, accuracy_update, auc_update, precision_update], {
                     'input:0': batch_imgs,
                     'labels:0': batch_labs,
                 })
@@ -112,7 +113,8 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
             # Compute metrics
             accuracy = sess.run(accuracy_fn)
             auc = sess.run(auc_fn)
-            wandb.log({"accuracy":accuracy, "auc_fn":auc_fn})
+            precision = sess.run(precision_fn)
+            wandb.log({"accuracy":accuracy, "auc":auc, "precision": precision})
 
             if True:
                 # Every logging_interval epochs compute and save results on the test set
@@ -122,7 +124,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
 
                 # Accuracy on test
                 for ti, (img, lab) in enumerate(zip(test_images, test_labels)):
-                    sess.run([accuracy_update, auc_update], {
+                    sess.run([accuracy_update, auc_update, precision_update], {
                         'input:0': img.reshape(1, size, size, -1),
                         'labels:0': [lab],
                     })
@@ -132,14 +134,17 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                 # Compute test metrics
                 test_accuracy = sess.run(accuracy_fn)
                 test_auc = sess.run(auc_fn)
-                wandb.log({"test_accuracy":test_accuracy, "test_auc":test_auc})
+                test_precision = sess.run(precision_fn)
+                wandb.log({"test_accuracy":test_accuracy, "test_auc":test_auc, "test_precision":test_precision})
 
                 # Collect summaries for tensorboard
                 summ_data = sess.run(metrics_summary, {
                     'training_accuracy:0': accuracy,
                     'training_AUC:0': auc,
+                    'training_precision:0': precision,
                     'test_accuracy:0': test_accuracy,
                     'test_AUC:0': test_auc,
+                    'test_precision:0': test_precision,
                 })
                 # Write summaries to disk
                 progress.add_summary(summ_data, e)
@@ -147,6 +152,6 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
             elapsed = time.time() - start
             # Print progress
             print(
-                'Epoch {:>3} | Time: {:>3.0f} s | Acc: {:>5.3f} (Test: {:>5.3f}) | AUC: {:>5.3f} (Test: {:>5.3f})'
-                    .format(e, elapsed, accuracy, test_accuracy, auc, test_auc)
+                'Epoch {:>3} | Time: {:>3.0f} s | Acc: {:>5.3f} (Test: {:>5.3f}) | AUC: {:>5.3f} (Test: {:>5.3f}) | Precision: {:>5.3f} (Test: {:>5.3f})'
+                    .format(e, elapsed, accuracy, test_accuracy, auc, test_auc, precision, test_precision)
             )

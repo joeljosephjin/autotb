@@ -96,6 +96,8 @@ def generate_functions(inp, labels, output):
     metrics = {
         'accuracy': tf.metrics.accuracy(labels, output['classes']),
         'AUC': tf.metrics.auc(labels, output['probabilities'][:,1]),
+        # 'recall': tf.metrics.recall(labels, output['classes']),
+        'precision': tf.metrics.precision(labels, output['classes'])
     }
 
     return error, train, metrics

@@ -24,6 +24,7 @@ def create_metrics_summary(metrics):
 
     for dataset in ['training', 'test']:
         for name, metric in metrics.items():
+            # print('name:', name)
             placeholder = tf.placeholder(tf.float32, shape=None, name=dataset + '_' + name)
             metric_summary = tf.summary.scalar(dataset + ' ' + name, placeholder)
             summaries.append(metric_summary)
