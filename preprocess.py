@@ -40,8 +40,8 @@ def preprocess(inDir, outDir, size=512):
 
     random.shuffle(files)
 
-    for i, f in enumerate(tqdm(files[:200])):
-    # for i, f in enumerate(tqdm(files)):
+    # for i, f in enumerate(tqdm(files[:200])):
+    for i, f in enumerate(tqdm(files)):
         in_path = os.path.join(inDir, f)
         out_path = os.path.join(outDir, f)
 
