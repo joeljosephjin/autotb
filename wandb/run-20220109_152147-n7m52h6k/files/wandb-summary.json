@@ -1,1 +1,0 @@
-{"accuracy": 0.8308823704719543, "auc": 0.6539053916931152, "precision": 0.0, "_runtime": 133, "_timestamp": 1641741840, "_step": 7, "test_accuracy": 0.8507462739944458, "test_auc": 0.7929824590682983, "test_precision": 0.0, "_wandb": {"runtime": 143}}
