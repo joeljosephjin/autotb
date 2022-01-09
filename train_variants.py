@@ -40,7 +40,7 @@ def split_train_and_test(images, labels, ratio=0.8):
     test_images = images[split:]
     test_labels = labels[split:]
 
-    print('Diversity of Training Set:', 'Class 0:', test_labels.tolist().count(0), 'Class 1:', test_labels.tolist().count(1))
+    print('Diversity of Validation Set:', 'Class 0:', test_labels.tolist().count(0), 'Class 1:', test_labels.tolist().count(1))
 
     return [training_images, training_labels], [test_images, test_labels]
 

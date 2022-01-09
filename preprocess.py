@@ -40,16 +40,17 @@ def preprocess(inDir, outDir, size=512):
 
     random.shuffle(files)
 
-    for i, f in enumerate(tqdm(files[:200])):
-    # for i, f in enumerate(tqdm(files)):
+    # for i, f in enumerate(tqdm(files[:200])):
+    for i, f in enumerate(tqdm(files)):
         in_path = os.path.join(inDir, f)
         out_path = os.path.join(outDir, f)
 
         # Skip files which are not in the correct format
         ext = os.path.splitext(f)[1]
         if ext.lower() != '.png':
-            print('Skipping file {}, as it isn\'t a PNG image.'.format(f))
-            continue
+            if ext.lower() != '.jpg':
+              print('Skipping file {}, as it isn\'t a PNG/IMG image.'.format(f))
+              continue
 
 
         if os.path.exists(out_path):
@@ -58,20 +59,23 @@ def preprocess(inDir, outDir, size=512):
 
         # print('Preprocessing {} - {} %'.format(f, int(i / num * 100)), end='\r')
 
-        img = imageio.imread(in_path)
+        try:
+          img = imageio.imread(in_path)
 
-        # If the image is RGB, compress it
-        if len(img.shape) > 2:
-            img = img.mean(2)
+          # If the image is RGB, compress it
+          if len(img.shape) > 2:
+              img = img.mean(2)
 
-        # PREPROCESSING
-        # Remove black border (sometimes there is a black band)
-        img_noborder = remove_border(img)
-        # Find bigger edge
-        edge = bigger_edge(img_noborder)
-        # Crop center
-        img_cropped = crop_center(img_noborder, edge)
-        # Resize to final size
-        img_resized = skimage.transform.resize(img_cropped, (size, size), order=3)
+          # PREPROCESSING
+          # Remove black border (sometimes there is a black band)
+          img_noborder = remove_border(img)
+          # Find bigger edge
+          edge = bigger_edge(img_noborder)
+          # Crop center
+          img_cropped = crop_center(img_noborder, edge)
+          # Resize to final size
+          img_resized = skimage.transform.resize(img_cropped, (size, size), order=3)
 
-        imageio.imsave(out_path, img_as_ubyte(img_resized))
+          imageio.imsave(out_path, img_as_ubyte(img_resized))
+        except:
+          print(in_path, 'error!')

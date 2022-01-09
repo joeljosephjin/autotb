@@ -8,6 +8,20 @@ import prepare_input
 import train_variants
 import progress
 
+# args.parse
+import argparse
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--epochs', type=int, default=20)
+parser.add_argument('--sets', type=int, default=3)
+parser.add_argument('--cross-validation', action='store_true')
+
+args = parser.parse_args()
+epochs = args.epochs
+sets = args.sets
+print('cross_validation:', args.cross_validation)
+# import sys; sys.exit()
+
 # Constants
 SIZE = 512
 
@@ -31,7 +45,7 @@ prepare_input.prepare(relPath('preprocessed'), relPath('input'))
 progress.start_tensorboard()
 
 # Train network
-if '--cross-validation' in sys.argv:
-    train_variants.train_cross_validation(relPath('input'), epochs=20, sets=3, size=SIZE)
+if args.cross_validation:
+    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
 else:
-    train_variants.train_single(relPath('input'), epochs=20, size=SIZE)
+    train_variants.train_single(relPath('input'), epochs=epochs, size=SIZE)
