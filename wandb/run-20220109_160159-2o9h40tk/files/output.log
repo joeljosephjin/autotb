@@ -1,0 +1,25 @@
+cross_validation: False
+Preprocessing...
+Preparing input...
+Input was already prepared
+Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time
+Training...
+Load the numpy file dataset...
+tcmalloc: large alloc 1587388416 bytes == 0x558a34e28000 @  0x7f16629c71e7 0x7f166058746e 0x7f16605d7c7b 0x7f16605d7d97 0x7f16605d7fe9 0x7f16605dad7d 0x7f16605db07b 0x7f166067c761 0x558a2ca49544 0x558a2ca49240 0x558a2cabd627 0x558a2cab79ee 0x558a2c989eb0 0x7f16605c4ef7 0x558a2ca49437 0x558a2ca49240 0x558a2cabc973 0x558a2cab79ee 0x558a2ca4abda 0x558a2cabcd00 0x558a2ca4aafa 0x558a2cab8915 0x558a2cab79ee 0x558a2ca4abda 0x558a2cab8915 0x558a2cab79ee 0x558a2ca4abda 0x558a2cab9737 0x558a2cab79ee 0x558a2cab76f3 0x558a2cb814c2
+Diversity of Training Set: Class 0: 755 Class 1: 246
+Diversity of Validation Set: Class 0: 196 Class 1: 55
+tcmalloc: large alloc 1269145600 bytes == 0x558a93802000 @  0x7f16629c71e7 0x7f166058746e 0x7f16605d7c7b 0x7f16605d7d97 0x7f1660670887 0x558a2ca494b0 0x558a2cb3ae1d 0x558a2cabce99 0x558a2cab79ee 0x558a2ca4abda 0x558a2cab9737 0x558a2cab79ee 0x558a2ca4abda 0x558a2cab9737 0x558a2cab79ee 0x558a2ca4abda 0x558a2cab9737 0x558a2cab79ee 0x558a2ca4abda 0x558a2cab9737 0x558a2cab79ee 0x558a2c989e2b 0x558a2cab9fe4 0x558a2cab7ced 0x558a2ca4abda 0x558a2cab9737 0x558a2cab79ee 0x558a2ca4abda 0x558a2cabcd00 0x558a2cab7ced 0x558a2ca4b48c
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:63: shuffle_and_repeat (from tensorflow.python.data.experimental.ops.shuffle_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.shuffle(buffer_size, seed)` followed by `tf.data.Dataset.repeat(count)`. Static tf.data optimizations will take care of using the fused implementation.
+WARNING:tensorflow:From /usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py:465: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the

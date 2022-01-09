@@ -100,6 +100,8 @@ def train_single(inFile, epochs, size=512):
     images = np.load(inFile + '.npy', mmap_mode='r')
     labels = np.load(inFile + '_labels.npy', mmap_mode='r')
 
+    print('Loaded the numpy file dataset...')
+
     # Create training and test sets
     training, test = split_train_and_test(images, labels)
 
