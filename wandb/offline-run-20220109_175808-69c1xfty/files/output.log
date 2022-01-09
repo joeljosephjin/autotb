@@ -1,0 +1,29 @@
+cross_validation: False
+Preprocessing...
+Preparing input...
+Input was already prepared
+Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time
+Training...
+Loaded the numpy file dataset...
+Diversity of Training Set: Class 0: 757 Class 1: 244
+Diversity of Validation Set: Class 0: 194 Class 1: 57
+Parameter number: 231602
+tcmalloc: large alloc 1587388416 bytes == 0x559f5305a000 @  0x7f94a5ddd1e7 0x7f94a399d46e 0x7f94a39edc7b 0x7f94a39edd97 0x7f94a39edfe9 0x7f94a39f0d7d 0x7f94a39f107b 0x7f94a3a92761 0x559f4c34a544 0x559f4c34a240 0x559f4c3be627 0x559f4c3b89ee 0x559f4c28aeb0 0x7f94a39daef7 0x559f4c34a437 0x559f4c34a240 0x559f4c3bd973 0x559f4c3b89ee 0x559f4c34bbda 0x559f4c3bdd00 0x559f4c34bafa 0x559f4c3b9915 0x559f4c3b89ee 0x559f4c34bbda 0x559f4c3b9915 0x559f4c3b89ee 0x559f4c34bbda 0x559f4c3ba737 0x559f4c3b89ee 0x559f4c3b86f3 0x559f4c4824c2
+WARNING:tensorflow:From /content/tbcnn/net.py:17: The name tf.keras.initializers.he_normal is deprecated. Please use tf.compat.v1.keras.initializers.he_normal instead.
+/content/tbcnn/net.py:21: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  output = tf.layers.batch_normalization(output)
+/usr/local/lib/python3.7/dist-packages/keras/legacy_tf_layers/normalization.py:455: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs, training=training)
+/content/tbcnn/net.py:35: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  parallel = tf.layers.batch_normalization(parallel)
+WARNING:tensorflow:From /content/tbcnn/net.py:98: auc (from tensorflow.python.ops.metrics_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+The value of AUC returned by this may race with the update so this is deprecated. Please use tf.keras.metrics.AUC instead.
+Traceback (most recent call last):
+  File "train.py", line 52, in <module>
+    train_variants.train_single(relPath('input'), epochs=epochs, size=SIZE)
+  File "/content/tbcnn/train_variants.py", line 108, in train_single
+    train_loop.train_net(training, test, size=size, epochs=epochs)
+  File "/content/tbcnn/train_loop.py", line 96, in train_net
+    start = time.time()
+UnboundLocalError: local variable 'time' referenced before assignment

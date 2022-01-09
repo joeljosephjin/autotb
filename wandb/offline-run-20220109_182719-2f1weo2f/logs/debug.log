@@ -1,0 +1,18 @@
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [wandb_setup.py:_flush():71] setting env: {}
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [wandb_init.py:_log_setup():371] Logging user logs to /content/tbcnn/wandb/offline-run-20220109_182719-2f1weo2f/logs/debug.log
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [wandb_init.py:_log_setup():372] Logging internal logs to /content/tbcnn/wandb/offline-run-20220109_182719-2f1weo2f/logs/debug-internal.log
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [wandb_init.py:init():404] calling init triggers
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [wandb_init.py:init():411] wandb.init called with sweep_config: {}
+config: {}
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [wandb_init.py:init():460] starting backend
+2022-01-09 18:27:19,971 INFO    MainThread:17861 [backend.py:_multiprocessing_setup():101] multiprocessing start_methods=fork,spawn,forkserver, using: spawn
+2022-01-09 18:27:19,989 INFO    MainThread:17861 [backend.py:ensure_launched():216] starting backend process...
+2022-01-09 18:27:19,997 INFO    MainThread:17861 [backend.py:ensure_launched():222] started backend process with pid: 17873
+2022-01-09 18:27:20,000 INFO    MainThread:17861 [wandb_init.py:init():469] backend started and connected
+2022-01-09 18:27:20,007 INFO    MainThread:17861 [wandb_init.py:init():533] updated telemetry
+2022-01-09 18:27:20,084 INFO    MainThread:17861 [wandb_init.py:init():606] starting run threads in backend
+2022-01-09 18:27:23,894 INFO    MainThread:17861 [wandb_run.py:_console_start():1810] atexit reg
+2022-01-09 18:27:23,894 INFO    MainThread:17861 [wandb_run.py:_redirect():1684] redirect: SettingsConsole.REDIRECT
+2022-01-09 18:27:23,895 INFO    MainThread:17861 [wandb_run.py:_redirect():1689] Redirecting console.
+2022-01-09 18:27:23,897 INFO    MainThread:17861 [wandb_run.py:_redirect():1745] Redirects installed.
+2022-01-09 18:27:23,897 INFO    MainThread:17861 [wandb_init.py:init():633] run started, returning control to user process

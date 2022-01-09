@@ -1,0 +1,59 @@
+cross_validation: False
+Preprocessing...
+Preparing input...
+Input was already prepared
+Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time
+Training...
+Loaded the numpy file dataset...
+tcmalloc: large alloc 1587388416 bytes == 0x55d7b4d06000 @  0x7fae8f5ee1e7 0x7fae8d1ae46e 0x7fae8d1fec7b 0x7fae8d1fed97 0x7fae8d1fefe9 0x7fae8d201d7d 0x7fae8d20207b 0x7fae8d2a3761 0x55d7ac6e6544 0x55d7ac6e6240 0x55d7ac75a627 0x55d7ac7549ee 0x55d7ac626eb0 0x7fae8d1ebef7 0x55d7ac6e6437 0x55d7ac6e6240 0x55d7ac759973 0x55d7ac7549ee 0x55d7ac6e7bda 0x55d7ac759d00 0x55d7ac6e7afa 0x55d7ac755915 0x55d7ac7549ee 0x55d7ac6e7bda 0x55d7ac755915 0x55d7ac7549ee 0x55d7ac6e7bda 0x55d7ac756737 0x55d7ac7549ee 0x55d7ac7546f3 0x55d7ac81e4c2
+Diversity of Training Set: Class 0: 756 Class 1: 245
+Diversity of Validation Set: Class 0: 195 Class 1: 56
+WARNING:tensorflow:From /content/tbcnn/net.py:17: The name tf.keras.initializers.he_normal is deprecated. Please use tf.compat.v1.keras.initializers.he_normal instead.
+/content/tbcnn/net.py:21: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  output = tf.layers.batch_normalization(output)
+/usr/local/lib/python3.7/dist-packages/keras/legacy_tf_layers/normalization.py:455: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs, training=training)
+/content/tbcnn/net.py:35: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  parallel = tf.layers.batch_normalization(parallel)
+Parameter number: 231602
+WARNING:tensorflow:From /content/tbcnn/net.py:98: auc (from tensorflow.python.ops.metrics_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+The value of AUC returned by this may race with the update so this is deprecated. Please use tf.keras.metrics.AUC instead.
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:46: shuffle_and_repeat (from tensorflow.python.data.experimental.ops.shuffle_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.shuffle(buffer_size, seed)` followed by `tf.data.Dataset.repeat(count)`. Static tf.data optimizations will take care of using the fused implementation.
+Traceback (most recent call last):
+  File "train.py", line 52, in <module>
+    train_variants.train_single(relPath('input'), epochs=epochs, size=SIZE)
+  File "/content/tbcnn/train_variants.py", line 108, in train_single
+    train_loop.train_net(training, test, size=size, epochs=epochs)
+  File "/content/tbcnn/train_loop.py", line 112, in train_net
+    next_training = create_dataloader(training_images_i, training_labels_i)
+  File "/content/tbcnn/train_loop.py", line 47, in create_dataloader
+    training_set = training_set.map(lambda im, lab: tf.py_func(augment, [im, lab, size], [im.dtype, lab.dtype]), num_parallel_calls=4)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/data/ops/dataset_ops.py", line 3836, in map
+    preserve_cardinality=False))
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/data/ops/dataset_ops.py", line 5505, in __init__
+    use_legacy_function=use_legacy_function)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/data/ops/dataset_ops.py", line 4533, in __init__
+    self._function = fn_factory()
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py", line 3245, in get_concrete_function
+    *args, **kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py", line 3210, in _get_concrete_function_garbage_collected
+    graph_function, _ = self._maybe_define_function(args, kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py", line 3557, in _maybe_define_function
+    graph_function = self._create_graph_function(args, kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/eager/function.py", line 3402, in _create_graph_function
+    capture_by_value=self._capture_by_value),
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/framework/func_graph.py", line 1143, in func_graph_from_py_func
+    func_outputs = python_func(*func_args, **func_kwargs)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/data/ops/dataset_ops.py", line 4510, in wrapped_fn
+    ret = wrapper_helper(*args)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/data/ops/dataset_ops.py", line 4440, in wrapper_helper
+    ret = autograph.tf_convert(self._func, ag_ctx)(*nested_args)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py", line 699, in wrapper
+    raise e.ag_error_metadata.to_exception(e)
+NameError: in user code:
+    File "/content/tbcnn/train_loop.py", line 47, in None  *
+        lambda im, lab: tf.py_func(augment, [im, lab, size], [im.dtype, lab.dtype]), num_parallel_calls=4)
+    NameError: name 'size' is not defined
