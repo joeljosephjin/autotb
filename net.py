@@ -85,7 +85,7 @@ def generate_network(size=512, width=1):
     }
 
 def generate_functions(inp, labels, output):
-    """Generates functions like error, accuracy and train,
+    """Generates functions like errorsensitivity, accuracy and train,
     that are used for training and testing the network"""
 
     error = tf.losses.sparse_softmax_cross_entropy(labels, output['logits'])
