@@ -9,6 +9,9 @@ import gc
 
 import train_loop
 
+def print_diversity(data_labels, dataname):
+    print(f'Diversity of {dataname}: Class 0: {data_labels.tolist().count(0)} Class 1: {data_labels.tolist().count(1)}')
+
 def shuffle(images, labels):
     """Return shuffled copies of the arrays, keeping the indexes of
     both arrays in corresponding places
@@ -35,12 +38,12 @@ def split_train_and_test(images, labels, ratio=0.8):
     training_images = images[:split]
     training_labels = labels[:split]
 
-    print('Diversity of Training Set:', 'Class 0:', training_labels.tolist().count(0), 'Class 1:', training_labels.tolist().count(1))
 
     test_images = images[split:]
     test_labels = labels[split:]
 
-    print('Diversity of Validation Set:', 'Class 0:', test_labels.tolist().count(0), 'Class 1:', test_labels.tolist().count(1))
+    print_diversity(training_labels, 'Training Set')
+    print_diversity(test_labels, 'Validation Set')
 
     return [training_images, training_labels], [test_images, test_labels]
 
@@ -126,6 +129,9 @@ def train_cross_validation(inFile, epochs, sets=5, size=512):
 
     for i in range(sets):
         print('Set {}'.format(i+1))
+
+        print_diversity(training_sets[i][1], 'Training Set')
+        print_diversity(test_sets[i][1], 'Validation Set')
 
         train_loop.train_net(
             training_sets[i],
