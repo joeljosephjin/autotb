@@ -19,7 +19,7 @@ def prepare(inDir, outFile):
     name_list = []
     label_list = []
     image_list = []
-    # for f in tqdm(files[:100]+files[-100:]):
+
     for f in tqdm(files):
         in_path = os.path.join(inDir, f)
         
