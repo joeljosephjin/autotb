@@ -102,7 +102,7 @@ def train_single(inFile, epochs, size=512):
 
     train_loop.train_net(training, test, size=size, epochs=epochs)
 
-def train_cross_validation(inFile, epochs, sets=3, size=512):
+def train_cross_validation(inFile, epochs, sets=5, size=512):
     """Train network multiple times in a cross validation fashon, in order to
     cover all the dataset in the tests and avoid the effect of outliers.
 
