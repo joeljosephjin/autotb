@@ -1,0 +1,272 @@
+cross_validation: True
+Preprocessing...
+Preparing input...
+Input was already prepared
+Use `python3 -m tensorboard.main --logdir=./logs/` to visualize accuracy and AUC graphs in real time
+Starting 5-fold cross validation study...
+Set 1
+Diversity of Training Set: Class 0: 57 Class 1: 67
+Diversity of Validation Set: Class 0: 20 Class 1: 11
+Loading the Training Dataset...
+100% 155/155 [00:00<00:00, 64298.00it/s]
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:223: shuffle_and_repeat (from tensorflow.python.data.experimental.ops.shuffle_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+Use `tf.data.Dataset.shuffle(buffer_size, seed)` followed by `tf.data.Dataset.repeat(count)`. Static tf.data optimizations will take care of using the fused implementation.
+WARNING:tensorflow:From /usr/local/lib/python3.7/dist-packages/tensorflow/python/autograph/impl/api.py:465: py_func (from tensorflow.python.ops.script_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+tf.py_func is deprecated in TF V2. Instead, there are two
+    options available in V2.
+    - tf.py_function takes a python function which manipulates tf eager
+    tensors instead of numpy arrays. It's easy to convert a tf eager tensor to
+    an ndarray (just call tensor.numpy()) but having access to eager tensors
+    means `tf.py_function`s can use accelerators such as GPUs as well as
+    being differentiable using a gradient tape.
+    - tf.numpy_function maintains the semantics of the deprecated tf.py_func
+    (it is not differentiable, and manipulates numpy arrays). It drops the
+    stateful argument making all functions stateful.
+WARNING:tensorflow:From /content/tbcnn/train_loop.py:231: DatasetV1.make_one_shot_iterator (from tensorflow.python.data.ops.dataset_ops) is deprecated and will be removed in a future version.
+Instructions for updating:
+This is a deprecated API that should only be used in TF 1 graph mode and legacy TF 2 graph mode available through `tf.compat.v1`. In all other situations -- namely, eager mode and inside `tf.function` -- you can consume dataset elements using `for elem in dataset: ...` or by explicitly creating iterator via `iterator = iter(dataset)` and fetching its elements via `values = next(iterator)`. Furthermore, this API is not available in TF 2. During the transition from TF 1 to TF 2 you can use `tf.compat.v1.data.make_one_shot_iterator(dataset)` to create a TF 1 graph mode style iterator for a dataset created through TF 2 APIs. Note that this should be a transient state of your code base as there are in general no guarantees about the interoperability of TF 1 and TF 2 code.
+WARNING:tensorflow:From /content/tbcnn/net.py:17: The name tf.keras.initializers.he_normal is deprecated. Please use tf.compat.v1.keras.initializers.he_normal instead.
+/content/tbcnn/net.py:21: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  output = tf.layers.batch_normalization(output)
+/usr/local/lib/python3.7/dist-packages/keras/legacy_tf_layers/normalization.py:455: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs, training=training)
+/content/tbcnn/net.py:35: UserWarning: `tf.layers.batch_normalization` is deprecated and will be removed in a future version. Please use `tf.keras.layers.BatchNormalization` instead. In particular, `tf.control_dependencies(tf.GraphKeys.UPDATE_OPS)` should not be used (consult the `tf.keras.layers.BatchNormalization` documentation).
+  parallel = tf.layers.batch_normalization(parallel)
+Loaded the Training Dataset...
+Loaded the Training Data Iterator...
+WARNING:tensorflow:From /content/tbcnn/net.py:98: auc (from tensorflow.python.ops.metrics_impl) is deprecated and will be removed in a future version.
+Instructions for updating:
+The value of AUC returned by this may race with the update so this is deprecated. Please use tf.keras.metrics.AUC instead.
+Parameter number: 184834
+
+
+
+
+
+
+Epoch   0 | Time:  22 s | Acc: 0.484 (Test: 0.355) | AUC: 0.459 (Test: 0.691) | Precision: 0.525 (Test: 0.355) | Recall: 0.463 (Test: 1.000)
+
+
+
+
+
+
+Epoch   1 | Time:  14 s | Acc: 0.540 (Test: 0.355) | AUC: 0.494 (Test: 0.736) | Precision: 0.540 (Test: 0.355) | Recall: 1.000 (Test: 1.000)
+
+
+
+
+
+
+
+Epoch   2 | Time:  15 s | Acc: 0.540 (Test: 0.355) | AUC: 0.550 (Test: 0.780) | Precision: 0.540 (Test: 0.355) | Recall: 1.000 (Test: 1.000)
+
+
+
+
+
+
+Epoch   3 | Time:  14 s | Acc: 0.597 (Test: 0.355) | AUC: 0.573 (Test: 0.730) | Precision: 0.578 (Test: 0.355) | Recall: 0.940 (Test: 1.000)
+
+
+
+
+
+
+Epoch   4 | Time:  14 s | Acc: 0.556 (Test: 0.355) | AUC: 0.616 (Test: 0.741) | Precision: 0.550 (Test: 0.355) | Recall: 0.985 (Test: 1.000)
+
+
+
+
+
+
+Epoch   5 | Time:  15 s | Acc: 0.540 (Test: 0.355) | AUC: 0.645 (Test: 0.745) | Precision: 0.540 (Test: 0.355) | Recall: 1.000 (Test: 1.000)
+
+
+
+
+
+
+Epoch   6 | Time:  15 s | Acc: 0.484 (Test: 0.581) | AUC: 0.511 (Test: 0.757) | Precision: 0.517 (Test: 0.458) | Recall: 0.687 (Test: 1.000)
+
+
+
+
+
+
+Epoch   7 | Time:  14 s | Acc: 0.540 (Test: 0.387) | AUC: 0.590 (Test: 0.750) | Precision: 0.540 (Test: 0.367) | Recall: 1.000 (Test: 1.000)
+
+
+
+
+
+
+Epoch   8 | Time:  15 s | Acc: 0.532 (Test: 0.355) | AUC: 0.543 (Test: 0.745) | Precision: 0.558 (Test: 0.355) | Recall: 0.642 (Test: 1.000)
+
+
+
+
+
+
+
+Epoch   9 | Time:  15 s | Acc: 0.540 (Test: 0.355) | AUC: 0.677 (Test: 0.755) | Precision: 0.541 (Test: 0.355) | Recall: 0.985 (Test: 1.000)
+
+
+
+
+
+Epoch  10 | Time:  13 s | Acc: 0.573 (Test: 0.355) | AUC: 0.697 (Test: 0.750) | Precision: 0.564 (Test: 0.355) | Recall: 0.925 (Test: 1.000)
+
+
+
+
+
+
+Epoch  11 | Time:  13 s | Acc: 0.589 (Test: 0.355) | AUC: 0.603 (Test: 0.743) | Precision: 0.598 (Test: 0.355) | Recall: 0.731 (Test: 1.000)
+
+
+
+
+
+
+Epoch  12 | Time:  15 s | Acc: 0.565 (Test: 0.677) | AUC: 0.589 (Test: 0.782) | Precision: 0.559 (Test: 0.538) | Recall: 0.925 (Test: 0.636)
+
+
+
+
+
+
+Epoch  13 | Time:  15 s | Acc: 0.581 (Test: 0.581) | AUC: 0.673 (Test: 0.770) | Precision: 0.576 (Test: 0.458) | Recall: 0.851 (Test: 1.000)
+
+
+
+
+
+
+
+Epoch  14 | Time:  15 s | Acc: 0.548 (Test: 0.710) | AUC: 0.661 (Test: 0.770) | Precision: 0.546 (Test: 0.571) | Recall: 0.970 (Test: 0.727)
+
+
+
+
+
+
+Epoch  15 | Time:  14 s | Acc: 0.581 (Test: 0.355) | AUC: 0.639 (Test: 0.755) | Precision: 0.612 (Test: 0.355) | Recall: 0.612 (Test: 1.000)
+
+
+
+
+
+
+Epoch  16 | Time:  14 s | Acc: 0.589 (Test: 0.581) | AUC: 0.653 (Test: 0.775) | Precision: 0.587 (Test: 0.458) | Recall: 0.806 (Test: 1.000)
+
+
+
+
+
+
+Epoch  17 | Time:  15 s | Acc: 0.573 (Test: 0.581) | AUC: 0.663 (Test: 0.777) | Precision: 0.567 (Test: 0.450) | Recall: 0.881 (Test: 0.818)
+
+
+
+
+
+
+Epoch  18 | Time:  14 s | Acc: 0.629 (Test: 0.548) | AUC: 0.741 (Test: 0.782) | Precision: 0.618 (Test: 0.440) | Recall: 0.821 (Test: 1.000)
+
+
+
+
+
+Epoch  19 | Time:  14 s | Acc: 0.637 (Test: 0.581) | AUC: 0.711 (Test: 0.782) | Precision: 0.622 (Test: 0.458) | Recall: 0.836 (Test: 1.000)
+
+
+
+
+
+Epoch  20 | Time:  14 s | Acc: 0.629 (Test: 0.710) | AUC: 0.684 (Test: 0.789) | Precision: 0.615 (Test: 0.571) | Recall: 0.836 (Test: 0.727)
+
+
+
+
+
+
+Epoch  21 | Time:  13 s | Acc: 0.669 (Test: 0.581) | AUC: 0.723 (Test: 0.784) | Precision: 0.667 (Test: 0.458) | Recall: 0.776 (Test: 1.000)
+
+
+
+
+
+
+Epoch  22 | Time:  14 s | Acc: 0.597 (Test: 0.548) | AUC: 0.705 (Test: 0.780) | Precision: 0.627 (Test: 0.440) | Recall: 0.627 (Test: 1.000)
+
+
+
+
+
+
+Epoch  23 | Time:  14 s | Acc: 0.589 (Test: 0.581) | AUC: 0.672 (Test: 0.784) | Precision: 0.603 (Test: 0.458) | Recall: 0.701 (Test: 1.000)
+
+
+
+
+
+
+Epoch  24 | Time:  14 s | Acc: 0.669 (Test: 0.710) | AUC: 0.751 (Test: 0.798) | Precision: 0.671 (Test: 0.583) | Recall: 0.761 (Test: 0.636)
+
+
+
+
+
+
+Epoch  25 | Time:  14 s | Acc: 0.613 (Test: 0.710) | AUC: 0.640 (Test: 0.791) | Precision: 0.634 (Test: 0.600) | Recall: 0.672 (Test: 0.545)
+
+
+
+
+
+
+Epoch  26 | Time:  14 s | Acc: 0.694 (Test: 0.710) | AUC: 0.746 (Test: 0.800) | Precision: 0.656 (Test: 0.571) | Recall: 0.910 (Test: 0.727)
+
+
+
+
+
+
+Epoch  27 | Time:  15 s | Acc: 0.645 (Test: 0.710) | AUC: 0.698 (Test: 0.814) | Precision: 0.639 (Test: 0.562) | Recall: 0.791 (Test: 0.818)
+
+
+
+
+
+
+Epoch  28 | Time:  14 s | Acc: 0.605 (Test: 0.581) | AUC: 0.690 (Test: 0.791) | Precision: 0.650 (Test: 0.458) | Recall: 0.582 (Test: 1.000)
+
+
+
+
+
+
+Epoch  29 | Time:  13 s | Acc: 0.669 (Test: 0.645) | AUC: 0.728 (Test: 0.793) | Precision: 0.667 (Test: 0.500) | Recall: 0.776 (Test: 0.818)
+Traceback (most recent call last):
+  File "train.py", line 50, in <module>
+    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
+  File "/content/tbcnn/train_variants.py", line 143, in train_cross_validation
+    epochs=epochs,
+  File "/content/tbcnn/train_loop.py", line 258, in train_net
+    sess.run(tf.local_variables_initializer())
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 971, in run
+    run_metadata_ptr)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1194, in _run
+    feed_dict_tensor, options, run_metadata)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1374, in _do_run
+    run_metadata)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1380, in _do_call
+    return fn(*args)
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1362, in _run_fn
+    self._extend_graph()
+  File "/usr/local/lib/python3.7/dist-packages/tensorflow/python/client/session.py", line 1403, in _extend_graph
+    tf_session.ExtendSession(self._session)
+KeyboardInterrupt

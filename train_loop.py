@@ -273,7 +273,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                 })
 
                 # Provide some feedback
-                print('Batch {} / {}'.format(b + 1, epoch_size), end='\r')
+                # print('Batch {} / {}'.format(b + 1, epoch_size), end='\r')
 
             # Compute metrics
             accuracy = sess.run(accuracy_fn)
@@ -295,7 +295,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                         'labels:0': [lab],
                     })
 
-                    print('Test image {} / {}'.format(ti + 1, len(test_images)), end='\r')
+                    # print('Test image {} / {}'.format(ti + 1, len(test_images)), end='\r')
 
                 # Compute test metrics
                 test_accuracy = sess.run(accuracy_fn)

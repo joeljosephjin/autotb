@@ -1,0 +1,29 @@
+{
+    "os": "Linux-5.4.144+-x86_64-with-Ubuntu-18.04-bionic",
+    "python": "3.7.12",
+    "heartbeatAt": "2022-01-09T19:53:01.362495",
+    "startedAt": "2022-01-09T19:52:57.576042",
+    "docker": null,
+    "gpu": "Tesla K80",
+    "gpu_count": 1,
+    "cpu_count": 2,
+    "cuda": null,
+    "args": [
+        "--epochs",
+        "100",
+        "--cross-validation",
+        "--sets=5"
+    ],
+    "state": "running",
+    "program": "train.py",
+    "codePath": "train.py",
+    "git": {
+        "remote": "http://joeljosephjin:@github.com/joeljosephjin/tbcnn.git",
+        "commit": "87fe27f6dec29bb777b9f5d97385a3f8b92b3872"
+    },
+    "email": "uname+@gmail.com",
+    "root": "/content/tbcnn",
+    "host": "ead02b461e66",
+    "username": "root",
+    "executable": "/usr/bin/python3"
+}
