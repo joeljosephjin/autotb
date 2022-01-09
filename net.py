@@ -58,7 +58,7 @@ def generate_network(size=512, width=1):
 
     # 3 "normal" convolutional blocks
     output = generate_convolutional_block(output, filters=32*width)
-    output = generate_convolutional_block(output, filters=48*width)
+    # output = generate_convolutional_block(output, filters=48*width)
     output = generate_convolutional_block(output, filters=64*width)
 
     # last convolutional block without pooling

@@ -267,7 +267,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                 batch_imgs, batch_labs = sess.run(next_training)
 
                 # Train
-                sess.run([train_fn, accuracy_update, auc_update, precision_update], {
+                sess.run([train_fn, accuracy_update, auc_update, precision_update, recall_update], {
                     'input:0': batch_imgs,
                     'labels:0': batch_labs,
                 })
