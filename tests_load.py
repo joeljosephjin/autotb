@@ -41,7 +41,7 @@ with tf.Session() as sess:
     graph = tf.get_default_graph()
     prob = graph.get_tensor_by_name('probabilities:0')
 
-    print("prob:", prob)
+    # print("prob:", prob)
 
     prob_val = sess.run(prob, {'input:0': batch_imgs, 'labels:0': batch_labs})
 
