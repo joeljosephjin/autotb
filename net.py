@@ -91,7 +91,7 @@ def generate_functions(inp, labels, output):
     error = tf.losses.sparse_softmax_cross_entropy(labels, output['logits'])
 
     optimizer = tf.train.AdamOptimizer(learning_rate=8e-5)
-    train = optimizer.minimize(error)
+    train = optimizer.minimize(error, name="optim_minimizer")
 
     metrics = {
         'accuracy': tf.metrics.accuracy(labels, output['classes']),
