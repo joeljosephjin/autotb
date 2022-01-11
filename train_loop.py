@@ -244,6 +244,8 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
     config = tf.ConfigProto()
     config.gpu_options.allow_growth = True
 
+    saver = tf.train.Saver()
+
     with tf.Session(config=config) as sess:
         # Initialize weights
         sess.run(tf.global_variables_initializer())
@@ -325,4 +327,5 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                     .format(e, elapsed, accuracy, test_accuracy, auc, test_auc, precision, test_precision, recall, test_recall)
             )
 
+        saver.save(sess, "models/modelname")
             
