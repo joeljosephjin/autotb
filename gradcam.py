@@ -113,8 +113,10 @@ def main():
     args = parser.parse_args()
     print(args)
 
-    input_image = utils.load_image(args.input_image) # tf RGB
-    image_batch = input_image[None, :, :, :3]
+    # input_image = utils.load_image(args.input_image) # tf RGB
+    # image_batch = input_image[None, :, :, :3]
+
+    image_batch = cv2.imread(args.input_image)
 
     graph = tf.Graph()
     sess = tf.InteractiveSession(graph=graph)
