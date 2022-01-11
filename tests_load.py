@@ -2,21 +2,13 @@ import tensorflow.compat.v1 as tf
 
 tf.disable_v2_behavior()
 
-tf.reset_default_graph()
+sess = tf.Session()
+new_saver = tf.train.import_meta_graph('models/modelname.meta')
+new_saver.restore(sess, tf.train.latest_checkpoint('models'))
+all_vars = tf.get_collection('vars')
 
-# Create some variables.
-v1 = tf.get_variable("v1", shape=[3])
-v2 = tf.get_variable("v2", shape=[5])
+print("Before the loop..")
 
-# Add ops to save and restore all the variables.
-saver = tf.train.Saver()
-
-# Later, launch the model, use the saver to restore variables from disk, and
-# do some work with the model.
-with tf.Session() as sess:
-  # Restore variables from disk.
-  saver.restore(sess, "/models/modelname.ckpt")
-  print("Model restored.")
-  # Check the values of the variables
-  print("v1 : %s" % v1.eval())
-  print("v2 : %s" % v2.eval())
+for v in all_vars:
+    v_ = sess.run(v)
+    print("v_:", v_)
