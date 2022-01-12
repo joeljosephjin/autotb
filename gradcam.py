@@ -71,7 +71,8 @@ def save_cam(cams, rank, class_id, class_name, prob, image_batch, input_image_pa
     """
     cam = cams[0] # the first GRAD-CAM for the first image in  batch
     image = np.uint8(image_batch[0][:, :, ::-1] * 255.0) # RGB -> BGR
-    cam = cv2.resize(cam, (224, 224)) # enlarge heatmap
+    # cam = cv2.resize(cam, (224, 224)) # enlarge heatmap
+    cam = cv2.resize(cam, (512, 512)) # enlarge heatmap
     cam = np.maximum(cam, 0)
     heatmap = cam / np.max(cam) # normalize
     cam = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET) # balck-and-white to color
@@ -81,7 +82,7 @@ def save_cam(cams, rank, class_id, class_name, prob, image_batch, input_image_pa
 
     # create image file names
     base_path, ext = os.path.splitext(input_image_path)
-    base_path_class = "{}_{}_{}_{}_{:.3f}".format(base_path, rank, class_id, class_name, prob)
+    base_path_class = "{}_{}_{}_{}_{}".format(base_path, rank, class_id, class_name, 'prob')
     cam_path = "{}_{}{}".format(base_path_class, "gradcam", ext)
     heatmap_path = "{}_{}{}".format(base_path_class, "heatmap", ext)
     segmentation_path = "{}_{}{}".format(base_path_class, "segmented", ext)
