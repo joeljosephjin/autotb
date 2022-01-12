@@ -73,6 +73,8 @@ def save_cam(cams, rank, class_id, class_name, prob, image_batch, input_image_pa
     image = np.uint8(image_batch[0][:, :, ::-1] * 255.0) # RGB -> BGR
     # cam = cv2.resize(cam, (224, 224)) # enlarge heatmap
     cam = cv2.resize(cam, (512, 512)) # enlarge heatmap
+    cv2.imwrite('cam.jpg', cam)
+    cv2.imwrite('image.jpg', image)
     cam = np.maximum(cam, 0)
     heatmap = cam / np.max(cam) # normalize
     cam = cv2.applyColorMap(np.uint8(255 * heatmap), cv2.COLORMAP_JET) # balck-and-white to color
@@ -126,6 +128,8 @@ def main():
     batch_labs = [0]
 
     batch_imgs, batch_labs = augment(batch_imgs, batch_labs, size)
+
+    cv2.imwrite('images0.jpg', batch_imgs)
 
     print('batch_imgs.size', batch_imgs.shape)
 
