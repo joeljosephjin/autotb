@@ -2,6 +2,7 @@ from tensorflow.python.framework import ops
 
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
+from train_loop import augment
 
 import numpy as np
 import sys
@@ -48,15 +49,17 @@ def saliency_by_class(input_model, images, category_index, nb_classes=1000):
     return grads
 
 
-def grad_cam(input_model,  category_index, layer_name, sess, feed_dict, nb_classes = 1000):
+def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     """
     calculate Grad-CAM
     """
-    loss = tf.multiply(input_model.prob, tf.one_hot([category_index], nb_classes))
+    loss = tf.multiply(prob, tf.one_hot([category_index], nb_classes))
     reduced_loss = tf.reduce_sum(loss[0])
     conv_output = sess.graph.get_tensor_by_name(layer_name + ':0')
     grads = tf.gradients(reduced_loss, conv_output)[0] # d loss / d conv
+
     output, grads_val = sess.run([conv_output, grads], feed_dict=feed_dict)
+    
     weights = np.mean(grads_val, axis=(1, 2)) # average pooling
     cams = np.sum(weights * output, axis=3)
     return cams
@@ -113,50 +116,72 @@ def main():
     args = parser.parse_args()
     print(args)
 
+    size=512
+
     # input_image = utils.load_image(args.input_image) # tf RGB
     # image_batch = input_image[None, :, :, :3]
 
-    image_batch = cv2.imread(args.input_image)
+    batch_imgs = cv2.imread(args.input_image)[:, :, [0]]
+    batch_labs = [0]
+
+    batch_imgs, batch_labs = augment(batch_imgs, batch_labs, size)
+
+    print('batch_imgs.size', batch_imgs.shape)
 
     graph = tf.Graph()
     sess = tf.InteractiveSession(graph=graph)
-    with tf.device('/cpu:0'):
-        images = tf.placeholder("float", [None, 224, 224, 3])
-        model = vgg16.Vgg16(vgg16_npy_path=args.vgg16_path)
-        with tf.name_scope("content_vgg"):
-            model.build(images)
+    # with tf.device('/cpu:0'):
+    #     images = tf.placeholder("float", [None, 224, 224, 3])
+    #     model = vgg16.Vgg16(vgg16_npy_path=args.vgg16_path)
+    #     with tf.name_scope("content_vgg"):
+    #         model.build(images)
 
-    path_synset = os.path.join(os.path.dirname(vgg16.__file__), "synset.txt")
-    prob = sess.run(model.prob, feed_dict={images: image_batch})
-    infos = get_info(prob[0], path_synset, top_n=args.top_n)
-    for rank, info in enumerate(infos):
-        print("{}: class id: {}, class name: {}, probability: {:.3f}, synset: {}".format(rank, *info))
+    # path_synset = os.path.join(os.path.dirname(vgg16.__file__), "synset.txt")
+
+    # load the model
+    new_saver = tf.train.import_meta_graph('models/modelname.meta')
+    new_saver.restore(sess, tf.train.latest_checkpoint('models'))
+
+    # load the probability tensor and feed it here
+    prob = graph.get_tensor_by_name('probabilities:0')
+    # prob_val = sess.run(prob, {'input:0': [batch_imgs], 'labels:0': batch_labs})
+
+    print('prob:', prob)
+
+    # infos = get_info(prob[0], path_synset, top_n=args.top_n)
+    # for rank, info in enumerate(infos):
+    #     print("{}: class id: {}, class name: {}, probability: {:.3f}, synset: {}".format(rank, *info))
 
     # GRAD-CAM
-    for i in range(args.top_n):
-        class_id = infos[i][0]
-        class_name = infos[i][1]
-        prob = infos[i][2]
-        cams = grad_cam(model, class_id, "content_vgg/conv5_3/Relu", sess, feed_dict={images: image_batch})
+    # for i in range(args.top_n):
+    for i in range(1):
+        class_id = 0
+        class_name = "tb"
+        model=None
+        # cams = grad_cam(prob_val, class_id, "content_vgg/conv5_3/Relu", sess, feed_dict={{'input:0': [batch_imgs], 'labels:0': batch_labs}})
+        cams = grad_cam(prob, class_id, 'conv2d_11/kernel', sess, feed_dict={'input:0': [batch_imgs], 'labels:0': batch_labs})
 
-        save_cam(cams, i, class_id, class_name, prob, image_batch, args.input_image)
+        print('cams.shape:', cams.shape)
+        print('cams:', cams)
+
+        save_cam(cams, i, class_id, class_name, prob, [batch_imgs], args.input_image)
 
     # Guided Backpropagation
-    register_gradient()
+    # register_gradient()
 
-    del model
-    images = tf.placeholder("float", [None, 224, 224, 3])
+    # del model
+    # images = tf.placeholder("float", [None, 224, 224, 3])
 
-    guided_model = everride_relu('GuidedBackPropReLU', images, args.vgg16_path)
-    class_id = infos[0][0]
-    class_saliencies = saliency_by_class(guided_model, images, class_id, nb_classes=1000)
-    class_saliency = sess.run(class_saliencies, feed_dict={images: image_batch})[0][0]
+    # guided_model = everride_relu('GuidedBackPropReLU', images, args.vgg16_path)
+    # class_id = infos[0][0]
+    # class_saliencies = saliency_by_class(guided_model, images, class_id, nb_classes=1000)
+    # class_saliency = sess.run(class_saliencies, feed_dict={images: image_batch})[0][0]
 
-    class_saliency = class_saliency - class_saliency.min()
-    class_saliency = class_saliency / class_saliency.max() * 255.0
-    base_path, ext = os.path.splitext(args.input_image)
-    gbprop_path = "{}_{}{}".format(base_path, "guided_bprop", ext)
-    cv2.imwrite(gbprop_path, class_saliency.astype(np.uint8))
+    # class_saliency = class_saliency - class_saliency.min()
+    # class_saliency = class_saliency / class_saliency.max() * 255.0
+    # base_path, ext = os.path.splitext(args.input_image)
+    # gbprop_path = "{}_{}{}".format(base_path, "guided_bprop", ext)
+    # cv2.imwrite(gbprop_path, class_saliency.astype(np.uint8))
 
 if __name__ == '__main__':
     main()

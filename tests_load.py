@@ -1,11 +1,8 @@
 import tensorflow.compat.v1 as tf
 tf.disable_v2_behavior()
-
 from train_variants import split_train_and_test
 from train_loop import augment
-
 import numpy as np
-
 import net
 
 size = 512
@@ -13,18 +10,15 @@ batch_size = 4
 
 images = np.load('input' + '.npy', mmap_mode='r')
 labels = np.load('input' + '_labels.npy', mmap_mode='r')
-
 training, test = split_train_and_test(images, labels)
-
 training_images, training_labels = training
-
-
-
 
 with tf.Session() as sess:
 
     new_saver = tf.train.import_meta_graph('models/modelname.meta')
     new_saver.restore(sess, tf.train.latest_checkpoint('models'))
+
+    print('trainables:', tf.trainable_variables())
 
     training_set = tf.data.Dataset.from_tensor_slices((training_images, training_labels), name="new1")\
         .apply(tf.data.experimental.shuffle_and_repeat(buffer_size=training_images.shape[0]))\
