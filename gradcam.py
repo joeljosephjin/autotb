@@ -56,22 +56,32 @@ def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     loss = tf.multiply(prob, tf.one_hot([category_index], nb_classes))
     reduced_loss = tf.reduce_sum(loss[0])
     conv_output = sess.graph.get_tensor_by_name(layer_name + ':0')
+    print('conv_output.shape:', conv_output.shape)
     grads = tf.gradients(reduced_loss, conv_output)[0] # d loss / d conv
 
     output, grads_val = sess.run([conv_output, grads], feed_dict=feed_dict)
+    print('output (conv layer):', output.shape)
+    print('grads_val (grads of loss/conv_layer):', grads_val.shape)
     
     weights = np.mean(grads_val, axis=(1, 2)) # average pooling
-    cams = np.sum(weights * output, axis=3)
-    return cams
+
+    # cams = np.sum(weights * output, axis=3)
+    # cams = np.sum(grads_val * output, axis=3)
+    cams = grads_val * output
+    # return cams
+    return cams[0,0,:,:, np.newaxis]
+    # return output[0,0,:,:, np.newaxis]
 
 
 def save_cam(cams, rank, class_id, class_name, prob, image_batch, input_image_path):
     """
     save Grad-CAM images
     """
-    cam = cams[0] # the first GRAD-CAM for the first image in  batch
+    # cam = cams[0] # the first GRAD-CAM for the first image in  batch
+    cam = cams # the first GRAD-CAM for the first image in  batch
     image = np.uint8(image_batch[0][:, :, ::-1] * 255.0) # RGB -> BGR
     # cam = cv2.resize(cam, (224, 224)) # enlarge heatmap
+    print('cam.size:', cam.shape)
     cam = cv2.resize(cam, (512, 512)) # enlarge heatmap
     cv2.imwrite('cam.jpg', cam)
     cv2.imwrite('image.jpg', image)
@@ -167,7 +177,7 @@ def main():
         class_name = "tb"
         model=None
         # cams = grad_cam(prob_val, class_id, "content_vgg/conv5_3/Relu", sess, feed_dict={{'input:0': [batch_imgs], 'labels:0': batch_labs}})
-        cams = grad_cam(prob, class_id, 'conv2d_10/kernel', sess, feed_dict={'input:0': [batch_imgs], 'labels:0': batch_labs})
+        cams = grad_cam(prob, class_id, 'conv2d_11/kernel', sess, feed_dict={'input:0': [batch_imgs], 'labels:0': batch_labs})
 
         print('cams.shape:', cams.shape)
         print('cams:', cams)
