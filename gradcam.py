@@ -127,7 +127,10 @@ def main():
     batch_imgs = cv2.imread(args.input_image)[:, :, [0]]
     batch_labs = [0]
 
-    batch_imgs, batch_labs = augment(batch_imgs, batch_labs, size)
+    print('batch_imgs.size (original)',batch_imgs.shape)
+
+    # batch_imgs, batch_labs = augment(batch_imgs, batch_labs, size)
+    batch_imgs = cv2.resize(batch_imgs, (size, size))[..., np.newaxis]
 
     cv2.imwrite('images0.jpg', batch_imgs)
 
@@ -164,7 +167,7 @@ def main():
         class_name = "tb"
         model=None
         # cams = grad_cam(prob_val, class_id, "content_vgg/conv5_3/Relu", sess, feed_dict={{'input:0': [batch_imgs], 'labels:0': batch_labs}})
-        cams = grad_cam(prob, class_id, 'conv2d_11/kernel', sess, feed_dict={'input:0': [batch_imgs], 'labels:0': batch_labs})
+        cams = grad_cam(prob, class_id, 'conv2d_10/kernel', sess, feed_dict={'input:0': [batch_imgs], 'labels:0': batch_labs})
 
         print('cams.shape:', cams.shape)
         print('cams:', cams)
