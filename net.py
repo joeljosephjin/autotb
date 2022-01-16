@@ -76,7 +76,7 @@ def generate_network(size=512, width=1):
     logits = tf.layers.Dense(
         units=2, # 2 outputs
         kernel_initializer=tf.keras.initializers.he_normal(),
-        name='logits',
+        name='logits_layer',
     )(output)
 
     probabilities = tf.nn.softmax(logits, name='probabilities')

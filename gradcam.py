@@ -57,8 +57,8 @@ def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     reduced_loss = tf.reduce_sum(loss[0])
     conv_layer = sess.graph.get_tensor_by_name(layer_name + ':0')
     conv_layer_out = sess.graph.get_tensor_by_name('last_layer' + ':0')
-    conv_gap_layer_out = sess.graph.get_tensor_by_name('layer_gap' + ':0')
-    # logits_layer_out = sess.graph.get_tensor_by_name('logits' + ':0')
+    conv_gap_layer_out = sess.graph.get_tensor_by_name('gap' + ':0')
+    # logits_layer_out = sess.graph.get_tensor_by_name('logits_layer' + ':0')
     # print('conv_layer.shape:', conv_layer.shape)
     # print('conv_layer_out.shape:', conv_layer_out.shape)
     grads = tf.gradients(reduced_loss, conv_layer)[0] # d loss / d conv
@@ -76,7 +76,9 @@ def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     # cams = np.sum(weights * output, axis=3)
     # cams = np.sum(grads_val * output, axis=3)
     # cams = grads_mean * output
-    cams = conv_layer_out_val[0,:,:,40]
+    for i in range(80):
+        conv_layer_out_val[0,:,:,0] += conv_gap_layer_out_val[0, i] * conv_layer_out_val[0,:,:,i]
+    cams = conv_layer_out_val[0,:,:,0]
     return cams
     # return cams[0,0,:,:, np.newaxis]
     # return output[0,0,:,:, np.newaxis]
