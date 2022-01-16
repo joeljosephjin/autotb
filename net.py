@@ -64,8 +64,11 @@ def generate_network(size=512, width=1):
     # last convolutional block without pooling
     output = generate_convolutional_block(output, filters=80*width, pool=False)
 
+    output = tf.identity(output, name="last_layer")
+
     # Global average pooling
     output = tf.reduce_mean(output, axis=[1,2], name='gap')
+
     # output = tf.layers.flatten(output, name='flatten')
 
     # Dense layer for the output, with softmax activation

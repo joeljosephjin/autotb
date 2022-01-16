@@ -55,21 +55,25 @@ def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     """
     loss = tf.multiply(prob, tf.one_hot([category_index], nb_classes))
     reduced_loss = tf.reduce_sum(loss[0])
-    conv_output = sess.graph.get_tensor_by_name(layer_name + ':0')
-    print('conv_output.shape:', conv_output.shape)
-    grads = tf.gradients(reduced_loss, conv_output)[0] # d loss / d conv
+    conv_layer = sess.graph.get_tensor_by_name(layer_name + ':0')
+    conv_layer_out = sess.graph.get_tensor_by_name('last_layer' + ':0')
+    # print('conv_layer.shape:', conv_layer.shape)
+    # print('conv_layer_out.shape:', conv_layer_out.shape)
+    grads = tf.gradients(reduced_loss, conv_layer)[0] # d loss / d conv
 
-    output, grads_val = sess.run([conv_output, grads], feed_dict=feed_dict)
-    print('output (conv layer):', output.shape)
+    conv_layer_val, grads_val, conv_layer_out_val = sess.run([conv_layer, grads, conv_layer_out], feed_dict=feed_dict)
+    print('conv_layer.shape:', conv_layer_val.shape)
+    print('conv_layer_out_val.shape:', conv_layer_out_val.shape)
     print('grads_val (grads of loss/conv_layer):', grads_val.shape)
     
-    weights = np.mean(grads_val, axis=(1, 2)) # average pooling
+    grads_mean = np.mean(grads_val, axis=(1, 2)) # average pooling
 
     # cams = np.sum(weights * output, axis=3)
     # cams = np.sum(grads_val * output, axis=3)
-    cams = grads_val * output
-    # return cams
-    return cams[0,0,:,:, np.newaxis]
+    # cams = grads_mean * output
+    cams = conv_layer_out_val
+    return cams
+    # return cams[0,0,:,:, np.newaxis]
     # return output[0,0,:,:, np.newaxis]
 
 
@@ -137,14 +141,14 @@ def main():
     batch_imgs = cv2.imread(args.input_image)[:, :, [0]]
     batch_labs = [0]
 
-    print('batch_imgs.size (original)',batch_imgs.shape)
+    # print('batch_imgs.size (original)',batch_imgs.shape)
 
     # batch_imgs, batch_labs = augment(batch_imgs, batch_labs, size)
     batch_imgs = cv2.resize(batch_imgs, (size, size))[..., np.newaxis]
 
     cv2.imwrite('images0.jpg', batch_imgs)
 
-    print('batch_imgs.size', batch_imgs.shape)
+    # print('batch_imgs.size', batch_imgs.shape)
 
     graph = tf.Graph()
     sess = tf.InteractiveSession(graph=graph)
