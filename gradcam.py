@@ -57,13 +57,18 @@ def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     reduced_loss = tf.reduce_sum(loss[0])
     conv_layer = sess.graph.get_tensor_by_name(layer_name + ':0')
     conv_layer_out = sess.graph.get_tensor_by_name('last_layer' + ':0')
+    conv_gap_layer_out = sess.graph.get_tensor_by_name('layer_gap' + ':0')
+    # logits_layer_out = sess.graph.get_tensor_by_name('logits' + ':0')
     # print('conv_layer.shape:', conv_layer.shape)
     # print('conv_layer_out.shape:', conv_layer_out.shape)
     grads = tf.gradients(reduced_loss, conv_layer)[0] # d loss / d conv
 
-    conv_layer_val, grads_val, conv_layer_out_val = sess.run([conv_layer, grads, conv_layer_out], feed_dict=feed_dict)
+    # conv_layer_val, grads_val, conv_layer_out_val, conv_gap_layer_out_val, logits_layer_out_val = sess.run([conv_layer, grads, conv_layer_out, conv_gap_layer_out, logits_layer_out], feed_dict=feed_dict)
+    conv_layer_val, grads_val, conv_layer_out_val, conv_gap_layer_out_val = sess.run([conv_layer, grads, conv_layer_out, conv_gap_layer_out], feed_dict=feed_dict)
     print('conv_layer.shape:', conv_layer_val.shape)
     print('conv_layer_out_val.shape:', conv_layer_out_val.shape)
+    print('conv_gap_layer_out_val.shape:', conv_gap_layer_out_val.shape)
+    # print('logits_layer_out_val.shape:', logits_layer_out_val.shape)
     print('grads_val (grads of loss/conv_layer):', grads_val.shape)
     
     grads_mean = np.mean(grads_val, axis=(1, 2)) # average pooling
@@ -71,7 +76,7 @@ def grad_cam(prob, category_index, layer_name, sess, feed_dict, nb_classes = 2):
     # cams = np.sum(weights * output, axis=3)
     # cams = np.sum(grads_val * output, axis=3)
     # cams = grads_mean * output
-    cams = conv_layer_out_val
+    cams = conv_layer_out_val[0,:,:,40]
     return cams
     # return cams[0,0,:,:, np.newaxis]
     # return output[0,0,:,:, np.newaxis]

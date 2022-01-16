@@ -70,6 +70,7 @@ def generate_network(size=512, width=1):
     output = tf.reduce_mean(output, axis=[1,2], name='gap')
 
     # output = tf.layers.flatten(output, name='flatten')
+    output = tf.identity(output, name="layer_gap")
 
     # Dense layer for the output, with softmax activation
     logits = tf.layers.Dense(
