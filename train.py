@@ -15,8 +15,15 @@ parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--epochs', type=int, default=20)
 parser.add_argument('--sets', type=int, default=3)
 parser.add_argument('--cross-validation', action='store_true')
-
+parser.add_argument('--wandb', action='store_true')
 args = parser.parse_args()
+
+if args.wandb:
+    import wandb
+    wandb.init(project="tbcnn", entity="joeljosephjin")
+else:
+    wandb=None
+
 epochs = args.epochs
 sets = args.sets
 print('cross_validation:', args.cross_validation)
@@ -47,6 +54,6 @@ progress.start_tensorboard()
 
 # Train network
 if args.cross_validation:
-    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE)
+    train_variants.train_cross_validation(relPath('input'), epochs=epochs, sets=sets, size=SIZE, wandb=wandb)
 else:
-    train_variants.train_single(relPath('input'), epochs=epochs, size=SIZE)
+    train_variants.train_single(relPath('input'), epochs=epochs, size=SIZE, wandb=wandb)

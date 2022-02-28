@@ -6,3 +6,4 @@ preprocessed/*
 input*
 *.pyc
 models
+wandb

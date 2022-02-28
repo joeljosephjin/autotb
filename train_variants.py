@@ -88,7 +88,7 @@ def get_rotations(num, image_sets, label_sets):
     
     return training_sets, test_sets
 
-def train_single(inFile, epochs, size=512):
+def train_single(inFile, epochs, size=512, wandb=None):
     """Train network a single time using the given files as input.
 
     inFile => path without extension (more than one file will be read)
@@ -105,9 +105,9 @@ def train_single(inFile, epochs, size=512):
     # Create training and test sets
     training, test = split_train_and_test(images, labels)
 
-    train_loop.train_net(training, test, size=size, epochs=epochs)
+    train_loop.train_net(training, test, size=size, epochs=epochs, wandb=wandb)
 
-def train_cross_validation(inFile, epochs, sets=5, size=512):
+def train_cross_validation(inFile, epochs, sets=5, size=512, wandb=None):
     """Train network multiple times in a cross validation fashon, in order to
     cover all the dataset in the tests and avoid the effect of outliers.
 
@@ -141,6 +141,7 @@ def train_cross_validation(inFile, epochs, sets=5, size=512):
             size=size,
             run_name='Set {} ({})'.format(i+1, datetime.now().strftime(r'%Y-%m-%d_%H:%M')),
             epochs=epochs,
+            wandb=wandb
         )
 
         tf.reset_default_graph()

@@ -12,9 +12,6 @@ import net
 from deformations import elastically_deform_image_2d
 import progress
 
-import wandb
-wandb.init(project="tbcnn", entity="joeljosephjin")
-
 import gc
 
 # Remove tf annoying logging
@@ -197,8 +194,9 @@ def train_net_mod(training, test, size=512, epochs=400, batch_size=4, logging_in
             )
 
 
-def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interval=5, run_name=None):
-    """Train network using the given training and test data.
+def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interval=5, run_name=None, wandb=None):
+    """
+    Train network using the given training and test data.
     """
 
     if run_name is None:
@@ -282,7 +280,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
             auc = sess.run(auc_fn)
             precision = sess.run(precision_fn)
             recall = sess.run(recall_fn)
-            wandb.log({"accuracy":accuracy, "auc":auc, "precision": precision, "recall": recall})
+            if wandb: wandb.log({"accuracy":accuracy, "auc":auc, "precision": precision, "recall": recall})
 
             if True:
                 # Every logging_interval epochs compute and save results on the test set
@@ -304,7 +302,7 @@ def train_net(training, test, size=512, epochs=400, batch_size=4, logging_interv
                 test_auc = sess.run(auc_fn)
                 test_precision = sess.run(precision_fn)
                 test_recall = sess.run(recall_fn)
-                wandb.log({"test_accuracy":test_accuracy, "test_auc":test_auc, "test_precision":test_precision, "test_recall":test_recall})
+                if wandb: wandb.log({"test_accuracy":test_accuracy, "test_auc":test_auc, "test_precision":test_precision, "test_recall":test_recall})
 
                 # Collect summaries for tensorboard
                 summ_data = sess.run(metrics_summary, {
