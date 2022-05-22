@@ -17,3 +17,10 @@ If you want to run a cross-validation study (5-fold), you can run:
 ```bash
 python3 train.py --cross-validation
 ```
+
+# To Do
+
+- [ ] Convert the code to pytorch
+- [ ] Test on different architectures
+- [ ] Refine the datasets
+- [ ] Design new transformer+cnn architecture
